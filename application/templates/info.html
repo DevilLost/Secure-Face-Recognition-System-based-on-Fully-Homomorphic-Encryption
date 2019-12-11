@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="Secure Face Recognize">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+  <title>安全人脸识别 - 信息</title>
+  <link rel="icon" href="./../static/img/favicon.ico">
+  <link rel="stylesheet" href="./../static/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./../static/css/weui.min.css">
+  <link rel="stylesheet" href="//cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="./../static/css/jq.dice-menu.min.css">
+  <link rel="stylesheet" href="./../static/css/info.css">
+</head>
+<body>
+<div class="cover-container d-flex w-100 h-100 p-2 mx-auto flex-column">
+  {# 页眉 #}
+  <header class="masthead mb-auto text-center" id="head">
+    <div>
+      <h3 class="masthead-brand">加密人脸识别</h3>
+      <nav class="nav nav-masthead justify-content-center">
+        <a class="nav-link" href="/">首页</a>
+        <a class="nav-link" href="/gain">录取</a>
+        <a class="nav-link active" href="/info">信息</a>
+        <a class="nav-link" href="/about">关于</a>
+      </nav>
+    </div>
+  </header>
+  {# 主体 #}
+  <main role="main" class="cover">
+    <div class="container" id="info">
+      <h3>信息</h3>
+      <p>用户ID：{{ user_id }}</p>
+      <h4 class="shadow-lg mt-3 mb-3 p-2" id="item-1">用户头像：</h4>
+      {% if img_status %}
+        <div class="text-center">
+          <img src="{{ user_img }}" class="img-fluid user-img" onclick="this.src='{{ user_img }}?'+Math.random()">
+        </div>
+      {% else %}
+        <p>请先上传照片 <a href="/gain" class="text-secondary"><i class="fa fa-link"></i></a></p>
+      {% endif %}
+      {% if img_status %}
+        <h4 class="shadow-lg mt-3 mb-3 p-2" id="item-2">识别比对（密文）：</h4>
+        <div style="min-height: 210px;">
+          <div class="weui-cells weui-cells_form" id="uploader">
+            <div class="weui-cell">
+              <div class="weui-cell__bd">
+                <div class="weui-uploader">
+                  <div class="weui-uploader__hd">
+                    <p class="weui-uploader__title text-center" id="tips-0">请限制照片大小在6M内</p>
+                    <div class="weui-uploader__info"><span id="uploadCount">0</span>/1</div>
+                  </div>
+                  <div class="weui-uploader__bd">
+                    <ul class="weui-uploader__files" id="uploaderFiles"></ul>
+                    <div class="weui-uploader__input-box">
+                      <input id="uploaderInput" class="weui-uploader__input" type="file"
+                             accept="image/jpg, image/png, image/jpeg">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="text-center">
+            <button class="btn btn-outline-light mt-2 mb-4 px-4" id="upload">上传</button>
+          </div>
+          <div class="loading text-center my-2" id="loading-0">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+        </div>
+        <h4 class="shadow-lg mt-3 mb-3 p-2" id="item-3">原始脸型数据：</h4>
+        <div class="face-data">
+          <div class="text-center">
+            <button class="btn btn-outline-light" id="get-data">点击获取</button>
+            <div class="loading" id="loading-1">
+              <span></span><span></span><span></span><span></span><span></span>
+            </div>
+            <p class="tips text-secondary" id="tips-1">以下为未经处理的512维人脸特征向量组</p>
+          </div>
+          <p class="data-body" id="prData"></p>
+          <button class="btn btn-outline-light btn-block my-2" id="click-data" type="button" data-toggle="collapse"
+                  data-target="#faceData" aria-expanded="false" aria-controls="faceData">
+            <i class="fa fa-angle-down"></i> 查看更多 (数据量较大，不建议移动端查看)
+          </button>
+          <div class="collapse overflow-auto" id="faceData">
+          </div>
+        </div>
+        <h4 class="shadow-lg mt-3 mb-3 p-2" id="item-4">加密脸型数据：</h4>
+        <div class="face-data">
+          <div class="text-center">
+            <button class="btn btn-outline-light" id="get-en-data">点击获取</button>
+            <div class="loading" id="loading-2">
+              <span></span><span></span><span></span><span></span><span></span>
+            </div>
+            <p class="tips text-secondary" id="tips-2">以下加密数据为传输便利已经过压缩和base64处理</p>
+          </div>
+          <p class="data-body" id="prEnData"></p>
+          <button class="btn btn-outline-light btn-block my-2" id="click-en-data" type="button" data-toggle="collapse"
+                  data-target="#faceEnData" aria-expanded="false" aria-controls="faceEnData">
+            <i class="fa fa-angle-down"></i> 查看更多 (数据量较大，不建议移动端查看)
+          </button>
+          <div class="collapse text-center" id="faceEnData">
+            <p class="data-body" id="enData"></p>
+          </div>
+        </div>
+        {# 右侧菜单 #}
+        <ul class="jq-dice-menu" offset="40%">
+          <div class="jq-items">
+            <li state="close"><span class="fa fa-circle-o"></span></li>
+            <li><span class="fa fa-user-circle-o" href="#item-1" hint="用户头像"></span></li>
+            <li><span class="fa fa-clone" href="#item-2" hint="识别比对"></span></li>
+            <li><span class="fa fa-unlock-alt" href="#item-3" hint="原始脸型数据"></span></li>
+            <li><span class="fa fa-lock" href="#item-4" hint="加密脸型数据"></span></li>
+            <li><span class="fa fa-angle-double-up" href="#head" hint="返回顶部"></span></li>
+          </div>
+          <div class="jq-hints">
+            <div class="hint">&nbsp;</div>
+          </div>
+        </ul>
+      {% endif %}
+    </div>
+  </main>
+  {# 页脚 #}
+  <footer class="footer mt-auto text-center">
+    <div class="mt-2">
+      <p class="mb-0">College from <a href="https://www.zwu.edu.cn/" target="_blank">ZWU</a>
+      </p>
+    </div>
+  </footer>
+</div>
+{# JS #}
+<script src="./../static/js/jquery.min.js"></script>
+<script src="./../static/js/jq.dice-menu.js"></script>
+{# <script src="./../static/js/popper.min.js"></script> #}
+<script src="./../static/js/bootstrap.min.js"></script>
+<script src="./../static/js/layer/layer.min.js"></script>
+<script src="./../static/js/weui.min.js"></script>
+<script src="./../static/js/cookie.js"></script>
+<script src="./../static/js/info.js"></script>
+</body>
+</html>
+{# Author: Toby #}

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="Secure Face Recognize">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+  <title>安全人脸识别 - 录取</title>
+  <link rel="icon" href="./../static/img/favicon.ico">
+  <link rel="stylesheet" href="./../static/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./../static/css/weui.min.css">
+  <link rel="stylesheet" href="//cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="./../static/css/gain.css">
+</head>
+<body class="text-center">
+<div class="cover-container d-flex w-100 h-100 p-2 mx-auto flex-column">
+  {# 页眉 #}
+  <header class="masthead mb-auto">
+    <div>
+      <h3 class="masthead-brand">加密人脸识别</h3>
+      <nav class="nav nav-masthead justify-content-center">
+        <a class="nav-link" href="/">首页</a>
+        <a class="nav-link active" href="/gain">录取</a>
+        <a class="nav-link" href="/info">信息</a>
+        <a class="nav-link" href="/about">关于</a>
+      </nav>
+    </div>
+  </header>
+  {# 主体 #}
+  <main role="main" class="cover" id="gain">
+    {# 拍摄上传 #}
+    <div class="container mt-2">
+      <h3>拍摄照片</h3>
+      <div class="text-center">
+        <div class="d-flex flex-column" id="start">
+          <i class="fa  fa-user-o fa-5x" id="start-i"></i>
+          <button class="btn btn-outline-light align-self-center mt-2" id="startCamera">开启摄像头</button>
+        </div>
+        <div id="capture">
+          <video class="rounded mx-auto d-block" id="camera" autoplay playsinline></video>
+          <button class="btn btn-outline-light border-0 mt-2 disabled" id="about">关于</button>
+          <button class="btn btn-outline-light mt-2" id="snap">拍摄</button>
+          <button class="btn btn-outline-light border-0 mt-2" id="back">返回</button>
+          <p class="p-2">请保证光线充足</p>
+        </div>
+        <div>
+          <canvas id="photo"></canvas>
+        </div>
+      </div>
+    </div>
+    {# 上传照片 #}
+    <div class="container mt-4" id="uploadArea">
+      <h3>上传你的照片</h3>
+      <div class="d-flex flex-column">
+        <div class="weui-cells weui-cells_form" id="uploader">
+          <div class="weui-cell">
+            <div class="weui-cell__bd">
+              <div class="weui-uploader">
+                <div class="weui-uploader__hd">
+                  <p class="weui-uploader__title">请限制照片大小在6M内</p>
+                  <div class="weui-uploader__info"><span id="uploadCount">0</span>/1</div>
+                </div>
+                <div class="weui-uploader__bd">
+                  <ul class="weui-uploader__files" id="uploaderFiles"></ul>
+                  <div class="weui-uploader__input-box">
+                    <input id="uploaderInput" class="weui-uploader__input" type="file" accept="image/jpg, image/png, image/jpeg">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-outline-light ml-3 mt-2 mb-4 align-self-center" id="upload">上传</button>
+      </div>
+    </div>
+  </main>
+  {# 页脚 #}
+  <footer class="footer mt-auto" id="foot">
+    <div class="mt-2">
+      <p class="mb-0">College from <a href="https://www.zwu.edu.cn/" target="_blank">ZWU</a>
+      </p>
+    </div>
+  </footer>
+</div>
+{# <script src="./../static/js/adapter.min.js"></script> #}
+<script src="./../static/js/jquery.min.js"></script>
+{#<script src="./../static/js/popper.min.js"></script>#}
+<script src="./../static/js/bootstrap.min.js"></script>
+<script src="./../static/js/layer/layer.min.js"></script>
+<script src="./../static/js/weui.min.js"></script>
+<script src="./../static/js/cookie.js"></script>
+<script src="./../static/js/gain.js"></script>
+</body>
+</html>
+{# Author: Toby #}
